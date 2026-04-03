@@ -1,11 +1,12 @@
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import * as z from 'zod';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
+import { signInUser } from '@/lib/signInUser';
 
 const formSchema = z.object({
   email: z.email({ message: 'Must be a valid email address.' }),
@@ -17,6 +18,7 @@ const formSchema = z.object({
 type FormValues = z.infer<typeof formSchema>;
 
 export default function Login() {
+  const navigate = useNavigate();
   const {
     register,
     handleSubmit,
@@ -30,10 +32,11 @@ export default function Login() {
     },
   });
 
-  const onSubmit = (data: FormValues) => {
+  const onSubmit = async (data: FormValues) => {
     try {
-      console.log('Login submitted with data:', data);
-      alert('Login successful');
+      const { user } = await signInUser(data.email, data.password);
+      console.log('Login submitted with data:', user);
+      navigate('/protected/profile');
     } catch (error) {
       console.error('Error submitting form:', error);
       alert('Sorry, there was an error logging into your account. Please try again.');

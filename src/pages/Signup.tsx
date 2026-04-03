@@ -1,7 +1,7 @@
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import * as z from 'zod';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -28,6 +28,7 @@ const formSchema = z.object({
 type FormValues = z.infer<typeof formSchema>;
 
 export default function Signup() {
+  const navigate = useNavigate();
   const {
     register,
     handleSubmit,
@@ -43,11 +44,11 @@ export default function Signup() {
     },
   });
 
-  const onSubmit = (data: FormValues) => {
+  const onSubmit = async (data: FormValues) => {
     try {
       console.log('Form submitted with data:', data);
-      createUser(data.name, data.email, data.password, data.birthYear);
-      alert('successful');
+      await createUser(data.name, data.email, data.password, data.birthYear);
+      navigate('/protected/profile');
     } catch (error) {
       console.error('Error submitting form:', error);
       alert(
