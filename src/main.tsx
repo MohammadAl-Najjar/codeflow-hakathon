@@ -10,9 +10,6 @@ import Home from './pages/Home.tsx';
 import Signup from './pages/Signup.tsx';
 import Login from './pages/Login.tsx';
 import Profile from './pages/Profile.tsx';
-import RoomDetail from './pages/RoomDetail.tsx';
-import BookingConfirmed from './pages/BookingConfirmed.tsx';
-import Reservations from './pages/Reservations.tsx';
 import NotFound from './pages/NotFound.tsx';
 
 const router = createBrowserRouter([
@@ -23,10 +20,6 @@ const router = createBrowserRouter([
       {
         path: '/',
         element: <Home />,
-      },
-      {
-        path: '/rooms/:id',
-        element: <RoomDetail />,
       },
 
       // Guest-only routes (redirect to /protected/profile if already logged in)
@@ -55,14 +48,6 @@ const router = createBrowserRouter([
               {
                 path: 'profile',
                 element: <Profile />,
-              },
-              {
-                path: 'booking-confirmed',
-                element: <BookingConfirmed />,
-              },
-              {
-                path: 'reservations',
-                element: <Reservations />,
               },
             ],
           },

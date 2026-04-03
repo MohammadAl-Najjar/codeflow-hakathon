@@ -1,7 +1,6 @@
 import { useAuth } from '@/hooks/useAuth';
 import { Separator } from '@/components/ui/separator';
-import Footer from '@/components/Footer';
-import { Mail, Calendar, Shield } from 'lucide-react';
+import { Mail, Calendar } from 'lucide-react';
 
 export default function Profile() {
   const { user } = useAuth();
@@ -18,7 +17,7 @@ export default function Profile() {
 
   return (
     <>
-      <section className="px-4 py-16 sm:py-24 bg-background min-h-[calc(100vh-4rem)]">
+      <section className="px-4 py-16 sm:py-24 bg-background ">
         <div className="mx-auto max-w-2xl">
           {/* Profile Header */}
           <div className="text-center mb-12">
@@ -63,19 +62,7 @@ export default function Profile() {
               </div>
             </div>
 
-            <div className="flex items-center gap-4 bg-card rounded-sm px-5 py-4">
-              <div className="flex h-10 w-10 items-center justify-center rounded-full bg-gold/10">
-                <Shield className="h-5 w-5 text-gold" />
-              </div>
-              <div>
-                <p className="label-caps text-muted-foreground">
-                  Account Status
-                </p>
-                <p className="text-sm font-medium text-foreground">
-                  Active — Verified Member
-                </p>
-              </div>
-            </div>
+         
           </div>
 
           {/* Heritage quote */}
@@ -83,14 +70,9 @@ export default function Profile() {
             <div className="flex justify-center mb-4">
               <div className="h-px w-16 bg-gold/30" />
             </div>
-            <p className="font-serif text-base italic text-muted-foreground">
-              "Every guest becomes a chapter in our living archive."
-            </p>
           </div>
         </div>
       </section>
-
-      <Footer />
     </>
   );
 }

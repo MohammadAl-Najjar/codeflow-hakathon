@@ -17,11 +17,10 @@ export default function Navbar() {
 
   const navLinks = [
     { to: '/', label: 'Home' },
-    { to: '/rooms/1', label: 'Rooms' },
   ];
 
   const protectedLinks = [
-    { to: '/protected/reservations', label: 'My Bookings' },
+    { to: '/protected/profile', label: 'Profile' },
   ];
 
   return (
@@ -33,10 +32,10 @@ export default function Navbar() {
           className="flex flex-col items-start"
         >
           <span className="font-serif text-lg font-semibold tracking-wide text-foreground">
-            HERITAGE ARCHIVE
+            localhost:3000
           </span>
-          <span className="label-caps text-[10px] text-muted-foreground -mt-0.5">
-            Est. 1912
+          <span className="text-[10px] text-muted-foreground -mt-0.5">
+            CodeFlow Hakathon
           </span>
         </Link>
 

@@ -59,9 +59,7 @@ export default function Login() {
         <div className="relative z-10 flex flex-col justify-end p-12 pb-16">
           <div className="label-caps text-[hsl(43_80%_42%)] mb-3">Est. 1924</div>
           <h1 className="font-serif text-5xl font-bold text-white leading-tight tracking-tight">
-            HERITAGE
-            <br />
-            ARCHIVE
+            localhost
           </h1>
           <p className="mt-4 max-w-sm text-lg text-white/70 font-serif italic">
             The quiet luxury of a well-kept secret.
