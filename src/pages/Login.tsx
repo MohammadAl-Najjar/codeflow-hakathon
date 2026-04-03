@@ -6,28 +6,17 @@ import { Link } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
-import { createUser } from '@/lib/createUser';
 
 const formSchema = z.object({
-  name: z
-    .string()
-    .min(2, { message: 'Name must be at least 2 characters string.' }),
   email: z.email({ message: 'Must be a valid email address.' }),
   password: z
     .string()
-    .min(8, { message: 'Password must be at least 8 characters long.' }),
-  birthYear: z
-    .number()
-    .int({ message: 'Birth year must be an integer.' })
-    .min(1900, { message: 'Birth year must be after 1900.' })
-    .max(new Date().getFullYear(), {
-      message: 'Birth year cannot be in the future.',
-    }),
+    .min(1, { message: 'Password is required.' }),
 });
 
 type FormValues = z.infer<typeof formSchema>;
 
-export default function Signup() {
+export default function Login() {
   const {
     register,
     handleSubmit,
@@ -36,23 +25,18 @@ export default function Signup() {
     mode: 'onChange',
     resolver: zodResolver(formSchema),
     defaultValues: {
-      name: '',
       email: '',
       password: '',
-      birthYear: undefined,
     },
   });
 
   const onSubmit = (data: FormValues) => {
     try {
-      console.log('Form submitted with data:', data);
-      createUser(data.name, data.email, data.password, data.birthYear);
-      alert('successful');
+      console.log('Login submitted with data:', data);
+      alert('Login successful');
     } catch (error) {
       console.error('Error submitting form:', error);
-      alert(
-        'Sorry, there was an error creating your account. Please try again.',
-      );
+      alert('Sorry, there was an error logging into your account. Please try again.');
     }
   };
 
@@ -61,33 +45,15 @@ export default function Signup() {
       <div className="w-full max-w-md space-y-8 rounded-3xl border border-border bg-card px-8 py-10 shadow-xl">
         <div className="text-center">
           <h2 className="text-3xl font-bold tracking-tight text-foreground">
-            Create an account
+            Welcome back
           </h2>
           <p className="mt-2 text-sm text-muted-foreground">
-            Enter your information to get started.
+            Enter your credentials to log in.
           </p>
         </div>
 
         <form onSubmit={handleSubmit(onSubmit)} className="mt-8 space-y-6">
           <div className="space-y-4">
-            <div className="space-y-2">
-              <Label htmlFor="name">Name</Label>
-              <div className="relative">
-                <Input
-                  id="name"
-                  placeholder="John Doe"
-                  {...register('name')}
-                  aria-invalid={!!errors.name}
-                  className={errors.name ? 'border-destructive pr-10' : 'pr-10'}
-                />
-              </div>
-              {errors.name && (
-                <p className="text-sm font-medium text-destructive">
-                  {errors.name.message}
-                </p>
-              )}
-            </div>
-
             <div className="space-y-2">
               <Label htmlFor="email">Email address</Label>
               <div className="relative">
@@ -129,27 +95,6 @@ export default function Signup() {
                 </p>
               )}
             </div>
-
-            <div className="space-y-2">
-              <Label htmlFor="birthYear">Birth Year</Label>
-              <div className="relative">
-                <Input
-                  id="birthYear"
-                  type="number"
-                  placeholder="1990"
-                  {...register('birthYear', { valueAsNumber: true })}
-                  aria-invalid={!!errors.birthYear}
-                  className={
-                    errors.birthYear ? 'border-destructive pr-10' : 'pr-10'
-                  }
-                />
-              </div>
-              {errors.birthYear && (
-                <p className="text-sm font-medium text-destructive">
-                  {errors.birthYear.message}
-                </p>
-              )}
-            </div>
           </div>
 
           <Button
@@ -157,17 +102,17 @@ export default function Signup() {
             className="w-full cursor-pointer"
             disabled={isSubmitting}
           >
-            Sign up
+            Log in
           </Button>
         </form>
 
         <p className="mt-8 text-center text-sm text-muted-foreground">
-          Already have an account?{' '}
+          Don't have an account?{' '}
           <Link
-            to="/login"
+            to="/signup"
             className="font-semibold text-primary hover:underline"
           >
-            Log in
+            Sign up
           </Link>
         </p>
       </div>
