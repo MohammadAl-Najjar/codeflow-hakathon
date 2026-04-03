@@ -1,46 +1,28 @@
-import { Link, useNavigate } from 'react-router';
+import { Link } from 'react-router';
 import { Button } from '@/components/ui/button';
-import { ArrowLeft, Home } from 'lucide-react';
+import { ArrowLeft } from 'lucide-react';
 
 export default function NotFound() {
-  const navigate = useNavigate();
-
   return (
-    <div className="flex min-h-[calc(100vh-3.5rem)] flex-col items-center justify-center px-4 py-16 text-center">
-      {/* Big fun 404 */}
-      <div className="relative select-none">
-        <h1 className="text-[10rem] font-black tracking-tighter text-primary/10 sm:text-[14rem]">
-          404
-        </h1>
-        <div className="absolute inset-0 flex items-center justify-center">
-          <span className="text-5xl sm:text-7xl">🫠</span>
-        </div>
-      </div>
-
-      <h2 className="mt-2 text-2xl font-bold text-foreground sm:text-3xl">
-        Page not found
+    <div className="flex min-h-[calc(100vh-4rem)] flex-col items-center justify-center px-4 py-12 bg-background">
+      <div className="label-caps text-gold mb-4">Archive Error</div>
+      <h1 className="font-serif text-6xl font-bold text-foreground">404</h1>
+      <h2 className="mt-4 font-serif text-2xl font-semibold text-foreground">
+        Page Not Found
       </h2>
-      <p className="mt-2 max-w-sm text-muted-foreground">
-        Oops! Looks like you wandered into the void. The page you're looking for
-        doesn't exist or has been moved.
+      <p className="mt-3 max-w-md text-center text-muted-foreground leading-relaxed">
+        The page you are looking for has been removed from the archive, or
+        perhaps it was never recorded.
       </p>
-
-      <div className="mt-8 flex flex-wrap items-center justify-center gap-3">
-        <Button
-          variant="outline"
-          className="cursor-pointer"
-          onClick={() => navigate(-1)}
-        >
+      <Button
+        asChild
+        className="mt-8 cursor-pointer heritage-gradient text-primary-foreground hover:opacity-90 rounded-sm"
+      >
+        <Link to="/">
           <ArrowLeft className="mr-2 h-4 w-4" />
-          Go back
-        </Button>
-        <Button asChild className="cursor-pointer">
-          <Link to="/">
-            <Home className="mr-2 h-4 w-4" />
-            Go to Home
-          </Link>
-        </Button>
-      </div>
+          Return to the Archive
+        </Link>
+      </Button>
     </div>
   );
 }
