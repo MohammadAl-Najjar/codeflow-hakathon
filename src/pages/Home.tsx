@@ -1,12 +1,23 @@
 import { Link } from 'react-router';
-import { ArrowRight, Quote, Star } from 'lucide-react';
+import { ArrowRight } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { useAuth } from '@/hooks/useAuth';
 import Footer from '@/components/Footer';
-import mockData from '@/lib/mock.json';
+import { useEffect, useState } from 'react';
+import { getRoomTypes, type RoomType } from '@/lib/rooms/getRoomType';
+import { getRoomImage } from '@/lib/rooms/roomAssets';
 
 export default function Home() {
   const { user } = useAuth();
+  const [roomTypes, setRoomTypes] = useState<RoomType[]>([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    getRoomTypes()
+      .then(setRoomTypes)
+      .catch(console.error)
+      .finally(() => setLoading(false));
+  }, []);
 
   return (
     <>
@@ -62,7 +73,7 @@ export default function Home() {
                     size="lg"
                     className="cursor-pointer rounded-sm h-12 px-8 border-white/20 text-white hover:bg-white/10 bg-transparent"
                   >
-                    <Link to="/rooms/luxury-suite">View Rooms</Link>
+                    <Link to={roomTypes[0] ? `/rooms/${roomTypes[0].id}` : '/'}>View Rooms</Link>
                   </Button>
                 </>
               )}
@@ -122,7 +133,7 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Accommodations Section */}
+      {/* Accommodations Section — real room types from DB */}
       <section className="px-4 py-24 sm:py-32 bg-[hsl(48_30%_93%)]">
         <div className="mx-auto max-w-6xl">
           <div className="text-center mb-16">
@@ -132,40 +143,46 @@ export default function Home() {
             </h2>
           </div>
 
-          <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
-            {mockData.rooms.map((room) => (
-              <Link
-                key={room.id}
-                to={`/rooms/${room.id}`}
-                className="group block"
-              >
-                <div className="relative overflow-hidden rounded-sm">
-                  <img
-                    src={room.image}
-                    alt={room.title}
-                    className="w-full aspect-[3/4] object-cover transition-transform duration-700 group-hover:scale-105"
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-t from-[hsl(218_100%_6%/0.7)] to-transparent" />
-                  <div className="absolute bottom-0 left-0 right-0 p-6">
-                    <h3 className="font-serif text-xl font-semibold text-white">
-                      {room.title}
-                    </h3>
-                    <p className="mt-1 text-sm text-white/70">
-                      {room.subtitle}
-                    </p>
-                    <div className="mt-3 flex items-baseline gap-1">
-                      <span className="text-2xl font-bold text-[hsl(43_80%_55%)]">
-                        ${room.price}
-                      </span>
-                      <span className="label-caps text-white/50">
-                        {room.priceUnit}
-                      </span>
+          {loading ? (
+            <div className="text-center py-12 text-muted-foreground">
+              Loading rooms...
+            </div>
+          ) : (
+            <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
+              {roomTypes.map((rt) => (
+                <Link
+                  key={rt.id}
+                  to={`/rooms/${rt.id}`}
+                  className="group block"
+                >
+                  <div className="relative overflow-hidden rounded-sm">
+                    <img
+                      src={getRoomImage(rt.id)}
+                      alt={rt.label}
+                      className="w-full aspect-[3/4] object-cover transition-transform duration-700 group-hover:scale-105"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-[hsl(218_100%_6%/0.7)] to-transparent" />
+                    <div className="absolute bottom-0 left-0 right-0 p-6">
+                      <h3 className="font-serif text-xl font-semibold text-white">
+                        {rt.label}
+                      </h3>
+                      <p className="mt-1 text-sm text-white/70">
+                        Up to {rt.capacity} {rt.capacity === 1 ? 'guest' : 'guests'}
+                      </p>
+                      <div className="mt-3 flex items-baseline gap-1">
+                        <span className="text-2xl font-bold text-[hsl(43_80%_55%)]">
+                          ${rt.price}
+                        </span>
+                        <span className="label-caps text-white/50">
+                          / NIGHT
+                        </span>
+                      </div>
                     </div>
                   </div>
-                </div>
-              </Link>
-            ))}
-          </div>
+                </Link>
+              ))}
+            </div>
+          )}
         </div>
       </section>
 
@@ -178,67 +195,47 @@ export default function Home() {
           </h2>
 
           <div className="grid gap-8 lg:grid-cols-2">
-            {mockData.facilities.map((facility) => (
-              <div key={facility.id} className="group relative overflow-hidden rounded-sm">
-                <img
-                  src={facility.image}
-                  alt={facility.title}
-                  className="w-full aspect-[16/9] object-cover transition-transform duration-700 group-hover:scale-105"
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-[hsl(218_100%_6%/0.8)] via-[hsl(218_100%_6%/0.2)] to-transparent" />
-                <div className="absolute bottom-0 left-0 right-0 p-8">
-                  <div className="label-caps text-[hsl(43_80%_55%)] mb-2">
-                    {facility.id === 'fine-dining' ? 'FINE DINING' : 'REJUVENATION'}
-                  </div>
-                  <h3 className="font-serif text-2xl font-bold text-white">
-                    {facility.title}
-                  </h3>
-                  <p className="mt-2 text-sm text-white/70 max-w-md leading-relaxed">
-                    {facility.subtitle}
-                  </p>
+            <div className="group relative overflow-hidden rounded-sm">
+              <img
+                src="/images/fine-dining.png"
+                alt="Fine Dining"
+                className="w-full aspect-[16/9] object-cover transition-transform duration-700 group-hover:scale-105"
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-[hsl(218_100%_6%/0.8)] via-[hsl(218_100%_6%/0.2)] to-transparent" />
+              <div className="absolute bottom-0 left-0 right-0 p-8">
+                <div className="label-caps text-[hsl(43_80%_55%)] mb-2">
+                  FINE DINING
                 </div>
+                <h3 className="font-serif text-2xl font-bold text-white">
+                  Fine Dining
+                </h3>
+                <p className="mt-2 text-sm text-white/70 max-w-md leading-relaxed">
+                  A journey through forgotten recipes and modern culinary mastery,
+                  led by Michelin-starred excellence.
+                </p>
               </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Guest Memoirs */}
-      <section className="px-4 py-24 sm:py-32 bg-[hsl(218_100%_6%)] text-white">
-        <div className="mx-auto max-w-6xl">
-          <div className="text-center mb-16">
-            <div className="label-caps text-[hsl(43_80%_55%)] mb-4">
-              Guest Memoirs
             </div>
-            <h2 className="font-serif text-4xl sm:text-5xl font-bold tracking-tight">
-              What Our Guests Say
-            </h2>
-          </div>
 
-          <div className="grid gap-8 md:grid-cols-3">
-            {mockData.testimonials.map((testimonial) => (
-              <div
-                key={testimonial.id}
-                className="relative p-8 rounded-sm bg-white/5 border border-white/10"
-              >
-                <Quote className="h-8 w-8 text-[hsl(43_80%_42%)] mb-4 opacity-50" />
-                <p className="font-serif text-base italic text-white/80 leading-relaxed mb-6">
-                  "{testimonial.text}"
-                </p>
-                <div className="flex items-center gap-1 mb-2">
-                  {[...Array(5)].map((_, i) => (
-                    <Star
-                      key={i}
-                      className="h-3.5 w-3.5 fill-[hsl(43_80%_42%)] text-[hsl(43_80%_42%)]"
-                    />
-                  ))}
+            <div className="group relative overflow-hidden rounded-sm">
+              <img
+                src="/images/spa-wellness.png"
+                alt="Azure Sanctuary"
+                className="w-full aspect-[16/9] object-cover transition-transform duration-700 group-hover:scale-105"
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-[hsl(218_100%_6%/0.8)] via-[hsl(218_100%_6%/0.2)] to-transparent" />
+              <div className="absolute bottom-0 left-0 right-0 p-8">
+                <div className="label-caps text-[hsl(43_80%_55%)] mb-2">
+                  REJUVENATION
                 </div>
-                <p className="text-sm font-medium text-white">
-                  {testimonial.author}
+                <h3 className="font-serif text-2xl font-bold text-white">
+                  Azure Sanctuary
+                </h3>
+                <p className="mt-2 text-sm text-white/70 max-w-md leading-relaxed">
+                  Our gilded spa offers bespoke treatments inspired by ancient
+                  wellness traditions, in a setting of marble and tranquility.
                 </p>
-                <p className="text-xs text-white/50">{testimonial.title}</p>
               </div>
-            ))}
+            </div>
           </div>
         </div>
       </section>

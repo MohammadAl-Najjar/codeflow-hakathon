@@ -1,13 +1,47 @@
-import { Link } from 'react-router-dom';
+import { Link, useLocation, Navigate } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { Separator } from '@/components/ui/separator';
 import Footer from '@/components/Footer';
-import mockData from '@/lib/mock.json';
-import { CheckCircle2, Calendar, MapPin, CreditCard, ArrowRight } from 'lucide-react';
+import { getRoomImage } from '@/lib/rooms/roomAssets';
+import {
+  CheckCircle2,
+  Calendar,
+  CreditCard,
+  ArrowRight,
+  Hash,
+} from 'lucide-react';
+
+interface BookingState {
+  reservation: {
+    id: number;
+    room_id: number;
+    user_id: string;
+    start_date: string;
+    end_date: string;
+    status: string;
+    roomLabel: string;
+    roomPrice: number;
+  };
+}
 
 export default function BookingConfirmed() {
-  const latestBooking = mockData.reservations.active[0];
+  const location = useLocation();
+  const state = location.state as BookingState | null;
+
+  // If user navigates here directly without booking, redirect to home
+  if (!state?.reservation) {
+    return <Navigate to="/" replace />;
+  }
+
+  const { reservation } = state;
+
+  const nights = Math.ceil(
+    (new Date(reservation.end_date).getTime() -
+      new Date(reservation.start_date).getTime()) /
+      (1000 * 60 * 60 * 24)
+  );
+  const totalPrice = nights * reservation.roomPrice;
 
   return (
     <>
@@ -18,9 +52,7 @@ export default function BookingConfirmed() {
             <div className="inline-flex items-center justify-center h-20 w-20 rounded-full bg-secondary/10 mb-6">
               <CheckCircle2 className="h-10 w-10 text-secondary" />
             </div>
-            <div className="label-caps text-gold mb-3">
-              Entry Recorded
-            </div>
+            <div className="label-caps text-gold mb-3">Entry Recorded</div>
             <h1 className="font-serif text-4xl sm:text-5xl font-bold text-foreground tracking-tight">
               Reservation Confirmed
             </h1>
@@ -35,15 +67,17 @@ export default function BookingConfirmed() {
           <div className="bg-card rounded-sm overflow-hidden shadow-[0_0_40px_hsl(218_100%_6%/0.06)]">
             <div className="relative h-48 overflow-hidden">
               <img
-                src={latestBooking.image}
-                alt={latestBooking.roomTitle}
+                src={getRoomImage(reservation.room_id)}
+                alt={reservation.roomLabel}
                 className="h-full w-full object-cover"
               />
               <div className="absolute inset-0 bg-gradient-to-t from-[hsl(218_100%_6%/0.7)] to-transparent" />
               <div className="absolute bottom-0 left-0 right-0 p-6">
-                <Badge variant="gold">CONFIRMED</Badge>
+                <Badge variant="gold">
+                  {reservation.status.toUpperCase()}
+                </Badge>
                 <h2 className="font-serif text-2xl font-bold text-white mt-2">
-                  {latestBooking.roomTitle}
+                  {reservation.roomLabel}
                 </h2>
               </div>
             </div>
@@ -57,21 +91,22 @@ export default function BookingConfirmed() {
                       Dates
                     </p>
                     <p className="text-sm font-medium text-foreground">
-                      {new Date(latestBooking.checkIn).toLocaleDateString('en-US', { month: 'short', day: 'numeric' })}
+                      {new Date(reservation.start_date).toLocaleDateString(
+                        'en-US',
+                        { month: 'short', day: 'numeric' }
+                      )}
                       {' – '}
-                      {new Date(latestBooking.checkOut).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })}
+                      {new Date(reservation.end_date).toLocaleDateString(
+                        'en-US',
+                        {
+                          month: 'short',
+                          day: 'numeric',
+                          year: 'numeric',
+                        }
+                      )}
                     </p>
-                  </div>
-                </div>
-
-                <div className="flex items-start gap-3">
-                  <MapPin className="h-4 w-4 text-gold mt-0.5" />
-                  <div>
-                    <p className="label-caps text-muted-foreground mb-1">
-                      Location
-                    </p>
-                    <p className="text-sm font-medium text-foreground">
-                      {latestBooking.location}
+                    <p className="text-xs text-muted-foreground mt-0.5">
+                      {nights} {nights === 1 ? 'night' : 'nights'}
                     </p>
                   </div>
                 </div>
@@ -83,25 +118,34 @@ export default function BookingConfirmed() {
                       Total
                     </p>
                     <p className="text-sm font-medium text-foreground">
-                      ${latestBooking.totalPrice.toLocaleString()}
+                      ${totalPrice.toFixed(2)}
+                    </p>
+                    <p className="text-xs text-muted-foreground mt-0.5">
+                      ${reservation.roomPrice}/night × {nights}
                     </p>
                   </div>
                 </div>
 
-                <div>
-                  <p className="label-caps text-muted-foreground mb-1">
-                    Confirmation
-                  </p>
-                  <p className="text-sm font-medium text-foreground font-mono">
-                    {latestBooking.confirmationNumber}
-                  </p>
+                <div className="flex items-start gap-3">
+                  <Hash className="h-4 w-4 text-gold mt-0.5" />
+                  <div>
+                    <p className="label-caps text-muted-foreground mb-1">
+                      Reservation ID
+                    </p>
+                    <p className="text-sm font-medium text-foreground font-mono">
+                      HA-{reservation.id}
+                    </p>
+                  </div>
                 </div>
               </div>
 
               <Separator className="my-6" />
 
-              <p className="text-sm text-muted-foreground mb-1">
-                {latestBooking.floor}
+              <p className="text-sm text-muted-foreground">
+                Room #{reservation.room_id} · Status:{' '}
+                <span className="font-medium text-foreground capitalize">
+                  {reservation.status}
+                </span>
               </p>
             </div>
           </div>

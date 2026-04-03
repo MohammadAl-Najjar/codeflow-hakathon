@@ -1,29 +1,20 @@
 import { useAuth } from '@/hooks/useAuth';
-import { Badge } from '@/components/ui/badge';
 import { Separator } from '@/components/ui/separator';
 import Footer from '@/components/Footer';
-import mockData from '@/lib/mock.json';
-import { Mail, Calendar, Award, MapPin, Shield } from 'lucide-react';
+import { Mail, Calendar, Shield } from 'lucide-react';
 
 export default function Profile() {
   const { user } = useAuth();
-  const guest = mockData.guestProfile;
 
   if (!user) return null;
 
-  const displayName = user.user_metadata?.display_name ?? guest.name;
+  const displayName = user.user_metadata?.display_name ?? user.email ?? '—';
   const email = user.email ?? '—';
   const createdAt = new Date(user.created_at).toLocaleDateString('en-US', {
     year: 'numeric',
     month: 'long',
     day: 'numeric',
   });
-
-  const stats = [
-    { label: 'Total Stays', value: guest.totalStays.toString() },
-    { label: 'Reward Points', value: guest.rewardPoints.toLocaleString() },
-    { label: 'Membership', value: guest.membership },
-  ];
 
   return (
     <>
@@ -33,35 +24,15 @@ export default function Profile() {
           <div className="text-center mb-12">
             <div className="mx-auto flex h-24 w-24 items-center justify-center rounded-full heritage-gradient mb-4">
               <span className="text-3xl font-serif font-bold text-primary-foreground">
-                {displayName.charAt(0)}
+                {displayName.charAt(0).toUpperCase()}
               </span>
             </div>
             <h1 className="font-serif text-3xl sm:text-4xl font-bold tracking-tight text-foreground">
               {displayName}
             </h1>
-            <Badge variant="gold" className="mt-3">
-              {guest.membership}
-            </Badge>
             <p className="mt-3 text-sm text-muted-foreground">
               Your account information at the Heritage Archive
             </p>
-          </div>
-
-          {/* Stats */}
-          <div className="grid grid-cols-3 gap-4 mb-10">
-            {stats.map((stat) => (
-              <div
-                key={stat.label}
-                className="text-center bg-card rounded-sm p-5"
-              >
-                <p className="font-serif text-2xl font-bold text-foreground">
-                  {stat.value}
-                </p>
-                <p className="label-caps text-muted-foreground mt-1">
-                  {stat.label}
-                </p>
-              </div>
-            ))}
           </div>
 
           <Separator className="mb-10" />
@@ -88,34 +59,6 @@ export default function Profile() {
                 <p className="label-caps text-muted-foreground">Member Since</p>
                 <p className="text-sm font-medium text-foreground">
                   {createdAt}
-                </p>
-              </div>
-            </div>
-
-            <div className="flex items-center gap-4 bg-card rounded-sm px-5 py-4">
-              <div className="flex h-10 w-10 items-center justify-center rounded-full bg-gold/10">
-                <Award className="h-5 w-5 text-gold" />
-              </div>
-              <div>
-                <p className="label-caps text-muted-foreground">
-                  Reward Points
-                </p>
-                <p className="text-sm font-medium text-foreground">
-                  {guest.rewardPoints.toLocaleString()} points
-                </p>
-              </div>
-            </div>
-
-            <div className="flex items-center gap-4 bg-card rounded-sm px-5 py-4">
-              <div className="flex h-10 w-10 items-center justify-center rounded-full bg-gold/10">
-                <MapPin className="h-5 w-5 text-gold" />
-              </div>
-              <div>
-                <p className="label-caps text-muted-foreground">
-                  Preferred Property
-                </p>
-                <p className="text-sm font-medium text-foreground">
-                  Heritage Archive London
                 </p>
               </div>
             </div>

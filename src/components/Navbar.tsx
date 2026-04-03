@@ -17,8 +17,7 @@ export default function Navbar() {
 
   const navLinks = [
     { to: '/', label: 'Home' },
-    { to: '/rooms/luxury-suite', label: 'Rooms' },
-    { to: '/', label: 'Facilities' },
+    { to: '/rooms/1', label: 'Rooms' },
   ];
 
   const protectedLinks = [

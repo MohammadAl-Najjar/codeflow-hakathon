@@ -6,7 +6,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
-import { signInUser } from '@/lib/signInUser';
+import { signInUser } from '@/lib/auth/signInUser';
 import { Eye, EyeOff } from 'lucide-react';
 import { useState } from 'react';
 

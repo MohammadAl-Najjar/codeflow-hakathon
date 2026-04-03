@@ -6,7 +6,7 @@ import {
   type ReactNode,
 } from 'react';
 import type { User, Session } from '@supabase/supabase-js';
-import { supabase } from '@/lib/supabase';
+import { supabase } from '@/lib/auth/supabase';
 
 interface AuthContextType {
   user: User | null;
