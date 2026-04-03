@@ -1,4 +1,4 @@
-import { supabase } from "../auth/supabase";
+import { supabase } from "../supabase";
 
 export async function addReservation(
     room_id: number,

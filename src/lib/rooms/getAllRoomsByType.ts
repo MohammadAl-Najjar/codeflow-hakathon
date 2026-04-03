@@ -1,4 +1,4 @@
-import { supabase } from "../auth/supabase";
+import { supabase } from "../supabase";
 
 export async function getAllRoomsByType(type_id: number) {
     const { data, error } = await supabase.from('rooms').select('*').eq('type_id', type_id);

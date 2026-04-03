@@ -1,4 +1,4 @@
-import { supabase } from "../auth/supabase";
+import { supabase } from "../supabase";
 
 /**
  * Finds an available room of the given type for the specified date range.

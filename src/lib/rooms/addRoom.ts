@@ -1,4 +1,4 @@
-import { supabase } from "../auth/supabase";
+import { supabase } from "../supabase";
 
 export async function addRoom(type_id: number) {
     const { data, error } = await supabase.from('rooms').insert({
