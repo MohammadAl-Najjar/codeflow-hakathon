@@ -1,0 +1,144 @@
+{
+  "rooms": [
+    {
+      "id": "luxury-suite",
+      "title": "The Luxury Suite",
+      "subtitle": "Bespoke furnishings and dedicated butler service.",
+      "price": 1200,
+      "priceUnit": "/ NIGHT",
+      "image": "/images/luxury-suite.png",
+      "dimensions": "1,250 SQ FT",
+      "occupancy": "2 Adults",
+      "view": "King's Garden",
+      "description": "Our Luxury Suite is more than a residence; it is a preserved moment of architectural heritage. Featuring original crown moldings restored by hand and herringbone oak floors, the suite balances historic gravity with contemporary technical precision. The separate living salon offers a private library of local history and a curated bar of vintage spirits.",
+      "longDescription": "The sleeping quarters are anchored by a bespoke king-size bed draped in 800-thread-count Egyptian cotton, situated beneath a hand-applied gold leaf ceiling detail that catches the first light of dawn over the archives.",
+      "quote": "A silent testament to the grandeur of the 19th century, curated for the modern collector.",
+      "archivistNote": "This suite once served as the private study of Lord Harrison. The original inkwell stains are still visible on the secretary desk, preserved under crystalline glass.",
+      "amenities": ["Butler Service", "Private Library", "Egyptian Cotton", "Gold Leaf Ceiling", "Antique Desk", "Curated Minibar"]
+    },
+    {
+      "id": "city-scenery",
+      "title": "City Scenery Views",
+      "subtitle": "Panoramic horizons over the heritage district.",
+      "price": 850,
+      "priceUnit": "/ NIGHT",
+      "image": "/images/city-view.png",
+      "dimensions": "980 SQ FT",
+      "occupancy": "2 Adults",
+      "view": "Heritage District",
+      "description": "Floor-to-ceiling windows frame the city's most iconic landmarks, from the spires of St. Martin's Cathedral to the modern skyline beyond. The room features a writing desk positioned to capture the city's changing moods.",
+      "longDescription": "Appointed with hand-selected antiques and a curated collection of city maps from the 18th century, this room is a cartographer's dream brought to life in the heart of the heritage district.",
+      "quote": "Every window is a canvas; every view, a masterpiece painted by time.",
+      "archivistNote": "The telescope by the north window was formerly owned by the city's chief astronomer and offers views of the same skyline recorded in his 1847 journal.",
+      "amenities": ["Panoramic Windows", "Writing Desk", "Antique Maps", "Telescope", "Morning Tea Service", "City Guide"]
+    },
+    {
+      "id": "private-balcony",
+      "title": "Private Balcony",
+      "subtitle": "Quiet moments overlooking our botanical gardens.",
+      "price": 920,
+      "priceUnit": "/ NIGHT",
+      "image": "/images/balcony-garden.png",
+      "dimensions": "1,100 SQ FT",
+      "occupancy": "2 Adults",
+      "view": "Botanical Gardens",
+      "description": "Step through restored French doors onto your own private terrace, overlooking three acres of manicured botanical gardens that have been tended since 1912. The balcony features hand-wrought ironwork and a bistro setting for two.",
+      "longDescription": "Inside, the room combines the serenity of the gardens with refined period furnishings, including a four-poster bed dressed in Italian linens and a clawfoot bathtub positioned beside a window of trailing wisteria.",
+      "quote": "Where architecture ends, the garden begins — and both were designed by the same dreaming hand.",
+      "archivistNote": "The wisteria growing along this balcony was planted by the hotel's founder in 1912, and has bloomed every spring without fail for over a century.",
+      "amenities": ["Private Terrace", "Garden Views", "Four-Poster Bed", "Clawfoot Bath", "Bistro Setting", "Wisteria Blooms"]
+    }
+  ],
+  "reservations": {
+    "active": [
+      {
+        "id": "res-001",
+        "roomTitle": "The Admiral's Suite",
+        "location": "Heritage Archive London",
+        "checkIn": "2024-10-12",
+        "checkOut": "2024-10-15",
+        "status": "CONFIRMED",
+        "confirmationNumber": "HA-2024-7829",
+        "floor": "Fourth Floor, South Terrace View",
+        "totalPrice": 3600,
+        "image": "/images/luxury-suite.png"
+      },
+      {
+        "id": "res-002",
+        "roomTitle": "Corner Conservatory Room",
+        "location": "Archive House Edinburgh",
+        "checkIn": "2024-12-22",
+        "checkOut": "2024-12-24",
+        "status": "CONFIRMED",
+        "confirmationNumber": "HA-2024-9143",
+        "floor": "Third Floor, Garden Wing",
+        "totalPrice": 1840,
+        "image": "/images/balcony-garden.png"
+      }
+    ],
+    "past": [
+      {
+        "id": "res-003",
+        "roomTitle": "The Library Suite",
+        "location": "London",
+        "checkIn": "2023-08-04",
+        "checkOut": "2023-08-08",
+        "status": "COMPLETED",
+        "confirmationNumber": "HA-2023-4521",
+        "totalPrice": 4800
+      },
+      {
+        "id": "res-004",
+        "roomTitle": "Executive Vault Room",
+        "location": "Edinburgh",
+        "checkIn": "2023-05-15",
+        "checkOut": "2023-05-18",
+        "status": "COMPLETED",
+        "confirmationNumber": "HA-2023-2190",
+        "totalPrice": 2550
+      }
+    ]
+  },
+  "guestProfile": {
+    "name": "Arthur Sterling",
+    "membership": "GOLD ARCHIVIST",
+    "email": "arthur.sterling@heritage.com",
+    "memberSince": "2021-03-15",
+    "totalStays": 12,
+    "rewardPoints": 24500
+  },
+  "testimonials": [
+    {
+      "id": 1,
+      "text": "Staying at the Heritage Archive felt like being a character in a classic novel. Every corner of the hotel is a curated masterpiece. The service was invisible yet omnipresent.",
+      "author": "Eleanor Whitworth",
+      "title": "London, UK"
+    },
+    {
+      "id": 2,
+      "text": "The attention to historical detail is unmatched. From the original gas lamp fittings to the hand-restored frescoes, every element tells a century-old story.",
+      "author": "James Cavendish",
+      "title": "New York, USA"
+    },
+    {
+      "id": 3,
+      "text": "A sanctuary of calm in the heart of the city. The botanical gardens alone are worth the visit, but the suites are simply otherworldly.",
+      "author": "Arabella Fontaine",
+      "title": "Paris, France"
+    }
+  ],
+  "facilities": [
+    {
+      "id": "fine-dining",
+      "title": "Fine Dining",
+      "subtitle": "A journey through forgotten recipes and modern culinary mastery, led by Michelin-starred excellence.",
+      "image": "/images/fine-dining.png"
+    },
+    {
+      "id": "spa-wellness",
+      "title": "Azure Sanctuary",
+      "subtitle": "Our gilded spa offers bespoke treatments inspired by ancient wellness traditions, in a setting of marble and tranquility.",
+      "image": "/images/spa-wellness.png"
+    }
+  ]
+}
